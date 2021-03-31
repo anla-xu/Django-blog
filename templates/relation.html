@@ -1,0 +1,42 @@
+<div class="speedbar">
+    <div class="pull-right">
+{#        <i class="fa fa-power-off"></i>#}
+        {% if request.session.status %}
+        <!-- 如果用户已经登录，则显示用户名下拉框 -->
+            <ul>
+                <li class="username">{{ request.session.username }}
+                    <ul>
+                        <li class="nav-item dropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{% url 'post:mylike' %}">我的点赞</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{% url 'post:mycomment' %}">我的评论</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{% url 'post:mycollection' %}">我的收藏</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="{% url 'useroperation:logout' %}">退出登录</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        <!-- 如果用户未登录，则显示 “登录” -->
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'useroperation:login' %}">登录</a>
+            </li>
+        <!-- if 语句在这里结束 -->
+        {% endif %}
+    </div>
+    <div class="toptip"><strong class="text-success"><i class="fa fa-volume-up"></i> </strong>   欢迎来访~</div>
+</div>

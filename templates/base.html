@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="/static/logo.ico" type="images/x-ico" />
+    {% block title %}{% endblock %}
+    {% block meta %}{% endblock %}
+    <link rel="stylesheet" type="text/css" href="/static/header.css">
+    <link rel="stylesheet" href="/static/style.css">
+{#    <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>#}
+    <script type="text/javascript" src="/static/jquery-2.0.2.min.js"></script>
+{#    <script type="text/javascript" src="/static/returntop.js"></script>#}
+    <script type="text/javascript" src="/static/prism_patched.min.js"></script>
+    <link rel="stylesheet" href="/static/prism.css">
+
+</head>
+<body  class="logobg_style">
+{#<div id="large-header" class="large-header login-page">#}
+{#  		<canvas id="demo-canvas" width="1590" height="711"></canvas>#}
+<div id="main_con" style="width:1519px">
+{% csrf_token %}
+    <div id="wrap" style="width:1519px">
+        {% include 'header.html' %}
+        <div class="outer" style="width:1519px">
+            {% include "relation.html" %}
+            {% block left %}
+            {% endblock %}
+            {% include 'right.html' %}
+        </div>
+        {% include 'footer.html' %}
+    <img id="gotoTop" src="/media/imgs/return.jpg" alt="">
+    </div>
+</div>
+{#</div>#}
+
+
+<script src="/static/TweenLite/TweenLite.min.js"></script>
+<script src="/static/TweenLite/EasePack.min.js"></script>
+<script src="/static/TweenLite/rAF.js"></script>
+<script src="/static/TweenLite/demo-1.js"></script>
+</body>
+<script>
+    	$('#gotoTop').hide();
+        function gotoTop(minHeight){
+
+            // 定义点击返回顶部图标后向上滚动的动画
+            $("#gotoTop").click(
+                function(){$('html,body').animate({scrollTop:'0px'},'slow');
+            })
+
+            // 获取页面的最小高度，无传入值则默认为600像素
+            minHeight? minHeight = minHeight:minHeight = 300;
+
+            // 为窗口的scroll事件绑定处理函数
+            $(window).scroll(function(){
+
+                // 获取窗口的滚动条的垂直滚动距离
+                var s = $(window).scrollTop();
+
+                // 当窗口的滚动条的垂直距离大于页面的最小高度时，让返回顶部图标渐现，否则渐隐
+                if( s > minHeight){
+                    $("#gotoTop").fadeIn();
+                }else{
+                    $("#gotoTop").fadeOut();
+                };
+            });
+        };
+        gotoTop();
+</script>
+
+</html>

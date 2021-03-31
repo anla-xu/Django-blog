@@ -1,0 +1,140 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+
+#header {
+    background: none repeat scroll 0 0 rgb(50, 36, 36);
+    position: relative;
+}
+.search{
+    margin: 10px 0  0 550px;
+    padding: 8px;
+
+}
+.navbar {
+    height: 52px;
+    background-color: #4a4a4a;
+    opacity: .9;
+    clear: both;
+    margin: 0 auto;
+    width: 1226px;
+    border: 1px solid #000;
+}
+/*.yusi-logo h1 {*/
+    /*font-family: "Microsoft Yahei" !important*/
+/*}*/
+.yusi-logo h1:hover .yusi-bloger {
+    left: 26px;
+    opacity: .2
+}
+.yusi-logo h1:hover .yusi-mono {
+    letter-spacing: 5px
+}
+.yusi-logo h1 {
+    color: #fff;
+    font-size: 26px;
+    display: inline-block;
+    padding: 30px 0 20px 0;
+    cursor: pointer;
+    font-family: "Microsoft Yahei", arial, sans-serif;
+    font-weight: 100
+}
+.yusi-logo {
+    display: block;
+    text-align: center;
+
+}
+
+
+
+.navbar .nav li a {
+    padding: 16px 20px;
+    color: #fff
+}
+.nav > li > a {
+    display: block;
+}
+a {
+    color: #00a67c;
+    text-decoration: none;
+}
+.nav-link,
+.dropdown-item{
+    width:80px;
+    height:28px;
+    display:block;
+}
+#search_img {
+    position:absolute;
+    display:inline-block;
+    top:10px;
+    width:37px;
+    height:37px;
+    background:url("/media/images/search.png") no-repeat center center;
+    background-size:80% 80%;
+    cursor:pointer;
+}
+.navbar .nav li a:hover {
+    background-color: #16a085;
+    color: #fff
+}
+.nav>li>a:focus{
+    background-color: #16a085;
+}
+.active {
+    background-color:#16a085
+}
+.nav {
+
+    margin-left: 0;
+    margin-bottom: 20px;
+    list-style: none
+}
+
+.navbar .nav {
+    position: relative;
+    float: left;
+    left: 0;
+    display: block;
+    font-size: 16px;
+
+}
+.navbar li{
+    float: left;
+}
+
+.pull-right {
+    float: right;
+}
+
+.pull-right>ul>li {
+    float: left;
+}
+
+.nav-item{
+    position:relative;
+}
+.nav-item a{
+    color:#fff
+}
+.pull-right .nav-item:hover{
+    background-color: #ee988e;
+    /*color:#fff*/
+}
+.pull-right li{
+    list-style-type: none;
+    width: 80px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    background-color: lightblue;
+}
+.pull-right ul ul {
+    display: none;
+}
+
+.pull-right ul li:hover ul {
+        display:block;
+}

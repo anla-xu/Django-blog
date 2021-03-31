@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="/static/bootstrap.min.css" type="text/css" rel="stylesheet">
+<link href="/static/font-awesome.min.css" type="text/javascript" rel="stylesheet">
+<link href="/static/bootsnav.css" type="text/css" rel="stylesheet">
+<link href="/static/normalize.css" type="text/css" rel="stylesheet">
+<link href="/static/css.css" rel="stylesheet" type="text/css">
+<script src="/static/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="/static/bootstrap.min.js" type="text/javascript"></script>
+<script src="/static/bootsnav.js" type="text/javascript"></script>
+<script src="/static/jquery.js" type="text/javascript"></script>
+<!--[if IE]><script src="js/html5.js"></script><![endif]-->
+<title>登录</title>
+</head>
+<body class="logobg_style">
+
+  	<div id="large-header" class="large-header login-page">
+  		<canvas id="demo-canvas" width="1590" height="711"></canvas>
+  		<div class="login-form">
+  			<div class="login-content">
+  				<h1 class="title_name">重置密码</h1>
+  				<form action="{% url 'useroperation:send_mail' %}" method="post" role="form" id="form_login" class="login_padding">
+                    {% csrf_token %}
+                    <div class="form-group clearfix">
+
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="icon_user"></i>
+							</div>
+
+							<input type="text" class="form-control" name="username" id="username" placeholder="用户名" autocomplete="off">
+						</div>
+
+					</div>
+                    {% if status %}
+                        <div class="form-group clearfix">
+
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="icon_password"></i>
+                                </div>
+
+                                <input type="password" class="form-control" name="password" id="password" placeholder="密码" autocomplete="off">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group clearfix">
+
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="icon_password"></i>
+                            </div>
+
+                            <input type="password" class="form-control" name="password" id="password1" placeholder="确认密码" autocomplete="off">
+                        </div>
+
+                    </div>
+                    {% endif %}
+					<div class="form-group clearfix">
+
+						<div class="input-group">
+							<div class="input-group-addon">
+								<i class="icon_password"></i>
+							</div>
+
+							<input type="text" class="form-control auth_code" name="auth_code" id="auth_code" placeholder="验证码" autocomplete="off">
+						</div>
+
+					</div>
+                        {% if status %}
+						    <div class=" textright">
+                                <a href="javascript:;" type="submit" class="forget" id="forget" style="font-size: 16px" onClick="Findpwd1()">获取验证码</a></div>
+                            <script>
+                                var countdown=30;
+                                var get = document.getElementById('forget');
+                                settime();
+                                function settime(){
+                                    if (countdown == 0) {
+                                        get.style = "";
+                                        get.innerHTML="获取验证码";
+                                        countdown = 10;
+                                        return;
+                                    } else {
+                                        get.style = "pointer-events: none;cursor: default;color:gray;";
+                                        get.innerHTML="重新发送"+ countdown;
+                                        countdown--;
+                                    }
+                                    setTimeout(function() {
+                                        settime() },1000)
+                                }
+                            </script>
+                        {% else %}
+                            <div class=" textright"><a href="javascript:;" type="submit" class="forget" id="forget" style="font-size: 16px" onClick="Findpwd1()">获取验证码</a></div>
+                        {% endif %}
+	                  <div class="tishi"></div>
+					<div class="form-group">
+
+						<a href="javascript:;" type="submit" class="btn btn-danger btn-block btn-login" onClick="Findpwd2()">
+{#							<i class="fa fa-sign-in"></i>#}
+                            完成
+                        </a>
+
+					</div>
+			</form>
+  			</div>
+
+  		</div>
+  	</div>
+
+<script src="/static/TweenLite/TweenLite.min.js"></script>
+<script src="/static/TweenLite/EasePack.min.js"></script>
+<script src="/static/TweenLite/rAF.js"></script>
+<script src="/static/TweenLite/demo-1.js"></script>
+</body>
+</html>

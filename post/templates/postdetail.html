@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+<!-- 加载自定义的过滤器 -->
+{% load myfilter %}
+
+{% block title %}
+    <title>{{ post.title }}</title>
+{% endblock title %}
+<link rel="stylesheet" href="/static/prism.css">
+{% block meta %}
+
+    {% if post.title is not None %}
+        <meta name="keywords" content="{{ post.title }}">
+        <meta name="description" content="{{ post.title }};{{ post.about }}">
+    {% else %}
+        <meta name="keywords" content="Granet,Python,Django,网络,IT,技术,博客,个人博客">
+        <meta name="description" content="Granet 的个人博客，记录生活的瞬间，分享学习的心得，感悟生活">
+    {% endif %}
+
+{% endblock meta %}
+{% block left %}
+    <div id="main">
+            <article class="article article-type-post">
+
+            <div class="article-inner">
+                <header class="article-header">
+                    <h1 itemprop="name">
+                        {{ post.title }}
+                    </h1>
+                </header>
+
+                <div class="article-entry" itemprop="articleBody">
+                    <span class="note">{{ post.about }}</span>
+                    <hr>
+                    <!-- safe :防止数据发生自动转义 -->
+                    {{ post.content|md|safe }}
+
+                    <div class="article-meta">
+                        <span class="article-date">
+                            <time>{{ post.createtime|date:'Y-m-d H:i:s' }}</time>
+                        </span>
+                        <div class="article-category">
+                            <a class="article-category-link" href="#" target="_blank">{{ post.category.cname }}</a>
+                        </div>
+                    </div>
+                    <div class="bdsharebuttonbox" style="margin:50px 6px 6px 0">
+                        <a href="#" class="bds_more" data-cmd="more"></a>
+                        <a href="#" class="bds_qzone" data-cmd="qzone"></a>
+                        <a href="#" class="bds_tsina" data-cmd="tsina"></a>
+                        <a href="#" class="bds_tqq" data-cmd="tqq"></a>
+                        <a href="#" class="bds_renren" data-cmd="renren"></a>
+                        <a href="#" class="bds_weixin" data-cmd="weixin"></a>
+
+                        <div id="div_digg">
+                            <div class="diggit action">
+                                <div class="dianzan">
+                                    <div class="like" id="like">
+                                        <img class="up " id="up" src="/media/images/tobarThumbUp.png" alt="">
+{#                                        <img class="down" src="/media/images/tobarThumbUpactive.png" alt="">#}
+    {#                                    <span class="count">&#10084</span>#}
+                                        <span >点赞</span>
+                                        <span class="diggnum" id="like_count">{{ likes.count }}</span>{# 动态获取点赞数 #}
+                                    </div>
+                                    <div class="save" id="save">
+                                        <img class="up" src="/media/images/tobarCollect.png" alt="">
+{#                                        <img class="down" src="/media/images/tobarCollectionActive.png" alt="">#}
+                                        <span>收藏</span>
+                                        <span class="diggnum" id="collect_count">{{ collections.count }}</span>{# 动态获取点赞数 #}
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="clear"></div>
+                            <div class="diggword" id="digg_tips" style="color: red;"></div>
+
+                            <script>
+
+                            </script>
+                        </div>
+
+
+                    </div>
+                    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                                        <!-- 发表评论 -->
+                    <hr>
+                    {% if request.session.status %}
+                        <div>
+                            <form
+                                class="comments"
+                                method="POST"
+                            >
+                            {% csrf_token %}
+                                <div class="form-group">
+                                    <textarea
+                                        type="text"
+                                        class="form-control"
+                                        id="body"
+                                        name="body"
+                                        rows="2"
+                                        placeholder="写下你的评论..."></textarea>
+                                </div>
+                                <!-- 提交按钮 -->
+                                <button type="button" class="btn btn-primary " id="publish">发布</button>
+                            </form>
+                        </div>
+                        <br>
+                    {% else %}
+                        <br>
+                        <h5 class="row justify-content-center">
+                            请<a href="{% url 'useroperation:login' %}" style="color:red">登录</a>后回复
+                        </h5>
+                        <br>
+                    {% endif %}
+
+                    <h4>共有{{ comments.count }}条评论</h4>
+                    <div id="allcomment">
+                        {% for comment in comments %}
+                            <hr style="background-color: #f2dede;
+        border: 0 none;
+        color: #eee;
+        height: 1px;">
+                            <div style="margin:10px 0 10px 0">
+                                <strong style="color: pink">
+                                    {{ comment.u_name.username }}
+                                </strong> 于
+                                <span style="color: green">
+                                    {{ comment.created|date:"Y-m-d H:i:s" }}
+                                </span> 时说：
+                                <p style="font-family: inherit; font-size: 1em;">
+                                    {{ comment.body }}
+                                </p>
+                            </div>
+
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            </article>
+    </div>
+    <script type="text/javascript">
+        {#$(function () {#}
+        {#    $(".like").click(function () {#}
+        {#        $(this).toggleClass('cs');#}
+        {#    })#}
+        {#    $(".save").click(function () {#}
+        {#            $(this).toggleClass('cs');#}
+        {#        })#}
+        {#    })#}
+        var count_like = 0;
+        var count_save = 0;
+        var like_up = true;
+        var collect_up = true;
+        var like_statue = {{ status.like }};
+        var collect_status = {{ status.collect }};
+        if ( like_statue >0 ) {
+            $(".like .up").attr("src","/media/images/tobarThumbUpactive.png");
+            $('.like').toggleClass('cs');
+            like_up = false
+        }
+        if ( collect_status >0 ) {
+            $(".save .up").attr("src","/media/images/tobarCollectionActive.png");
+            $('.save').toggleClass('cs');
+            collect_up = false
+        }
+        {# 点赞和踩 ，两个标签加上action  is_up为布尔值 #}
+        $('.dianzan .like').click(function () {
+            {% if not request.session.username %}
+                window.location.href = "{% url 'useroperation:login' %}";
+                {#window.location.replace("{% url 'useroperation:login' %}");#}
+                return ;
+            {% endif %}
+            if (count_like >10){
+                alert("操作次数过多！请稍后再试");
+                return ;
+            }
+            console.log(count_like);
+            if (like_up){
+                console.log("红色");
+                $(".like .up").attr("src","/media/images/tobarThumbUpactive.png");
+                $('.like').toggleClass('cs');
+                like_up = false;
+            }else {
+                console.log("灰色");
+                $(".like .up").attr("src","/media/images/tobarThumbUp.png");
+                $('.like').toggleClass('cs');
+                like_up = true;
+            }
+            {# ajax来操作点赞功能 #}
+            $.ajax({
+                url: '/like/',
+                type: 'post',
+                data: {
+                    'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']").val(),  //token值
+                    'status': 'like',
+                    'article_id': '{{ post.id }}',
+                },
+                success: function (data) {
+                    if (data.status) {
+                        // Ajax 局部刷新!!!
+                        console.log("success");
+                        var val = parseInt($("#like_count").text());
+                        $('#like_count').text(val+1);
+
+                    }
+                    count_like++;
+                }
+            })
+        })
+        $('.dianzan .save').click(function () {
+            {% if not request.session.username %}
+                window.location.href = "{% url 'useroperation:login' %}";
+                {#window.location.replace("{% url 'useroperation:login' %}");#}
+                return ;
+            {% endif %}
+            if (collect_up){
+                $(".save .up").attr("src","/media/images/tobarCollectionActive.png");
+                $('.save').toggleClass('cs');
+                collect_up = false;
+            }else {
+                $(".save .up").attr("src","/media/images/tobarCollect.png");
+                $('.save').toggleClass('cs');
+                collect_up = true;
+            }
+            {# ajax来操作点赞功能 #}
+            $.ajax({
+                url: '/like/',
+                type: 'post',
+                data: {
+                    'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']").val(),  //token值
+                    'status': 'save',
+                    'article_id': '{{ post.id }}',
+                },
+                success: function (data) {
+                    console.log(data.status)
+                    if (data.status) {
+                        console.log(data.status)
+                        // Ajax 局部刷新!!!
+                        var val = parseInt($("#collect_count").text());
+                        $('#collect_count').text(val+1);
+                    }
+                    count_save++;
+                }
+            })
+        })
+        $('#publish').click(function () {
+            {# ajax来操作点赞功能 #}
+            $.ajax({
+                url: '/post-comment/',
+                type: 'post',
+                data: {
+                    'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']").val(),  //token值
+                    'content': $('.comments').serialize(),
+                    'article_id': '{{ post.id }}',
+                },
+                success: function (data) {
+                    console.log("评论成功")
+                    if (data.status) {
+                        console.log(data.status)
+                        // Ajax 局部刷新!!!
+                        var val = parseInt($("#allcomment").text());
+                        $('#allcomment').html();
+                    }
+                    else {
+                        setTimeout(function () {  // 设置时钟函数，一秒钟后消失
+                            $('#digg_tips').html('');  //清空
+                        }, 1000)
+                    }
+                }
+            })
+        })
+        function resettime(){
+            count_like = 0;
+            count_save = 0;
+        }
+        var t1 = window.setInterval(resettime,600000);
+    </script>
+{% endblock %}

@@ -1,0 +1,90 @@
+<header id="header" class="header">
+        <div class="container-inner">
+            <!--头部-->
+            <div class="yusi-logo">
+                <a href="#">
+                    <h1>
+                        <span class="yusi-mono">Granet</span>
+                        <span class="yusi-bloger">的个人博客</span>
+                    </h1>
+                </a>
+            </div>
+
+            <!--导航条-->
+            <div id="nav-header" class="navbar">
+                <ul class="nav">
+                    <!--获取一级分类信息-->
+
+                    <li id="menu-item-851"
+                        class="menu-item menu-item-type-post_type menu-item-object-page  menu-item-851">
+                        <a href="{% url 'post:home' %}">首页</a>
+                    </li>
+{##}
+{#                    <li id="menu-item-14"#}
+{#                        class="menu-item menu-item-type-taxonomy menu-item-object-category  menu-item-has-children menu-item-14">#}
+{#                        <a href="#"></a>#}
+{#                    </li>#}
+
+{#                    <li id="menu-item-14"#}
+{#                        class="menu-item menu-item-type-taxonomy menu-item-object-category  menu-item-has-children menu-item-14">#}
+{#                        <a href="#">技术杂谈</a>#}
+{##}
+{#                    </li>#}
+
+{#                    <li id="menu-item-851"#}
+{#                        class="menu-item menu-item-type-post_type menu-item-object-page  menu-item-851">#}
+{#                        <a href="#">开发工具</a>#}
+{#                    </li>#}
+
+                    <li id="menu-item-851"
+                        class="menu-item menu-item-type-post_type menu-item-object-page  menu-item-851">
+                        <a href="{% url 'post:aboutauthor' %}">关于博主</a>
+                    </li>
+
+{#                    <li id="menu-item-851"#}
+{#                        class="menu-item menu-item-type-post_type menu-item-object-page  menu-item-851">#}
+{#                        <a href="#">给我留言</a>#}
+{#                    </li>#}
+
+                    <li id="menu-item-851"
+                        class="menu-item menu-item-type-post_type menu-item-object-page  menu-item-851">
+                        <a href="#">赞赏作者</a>
+                    </li>
+{##}
+                    <li id="menu-item-851"
+                        class="menu-item menu-item-type-post_type menu-item-object-page  menu-item-851">
+                        <a href="{% url 'post:contact' %}">联系博主</a>
+                    </li>
+
+                        <!--导航条结束-->
+
+                        <!--搜索框-->
+                    <li style="float:right;">
+                        <div class="toggle-search"><i class="fa fa-search"></i></div>
+                        <div class="search-expand">
+                            <div class="search-expand-inner">
+                                <form class="nav-item navbar-form mr-2 py-md-2" role="search" method="get" id="searchform" action="/search/">
+                                    <div class="input-group">
+                                        <input type="search" name="q" class="search" placeholder="搜索" required=True>
+                                        <button id="search_img"></button>
+                                    </div><!-- /input-group -->
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                        <!--搜索框结束-->
+
+                </ul>
+
+            </div>
+            <!--导航条结束-->
+        </div>
+</header>
+<script>
+  $(document).ready(function () {
+        $('.nav li a').each(function () {
+        if ($($(this))[0].href == String(window.location))
+        $(this).parent().addClass('active');
+        });
+    })
+</script>

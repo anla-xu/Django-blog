@@ -1,0 +1,65 @@
+{% load myfilter%}
+
+
+<aside id="sidebar">
+     <!--分类-->
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget d_tag">
+
+                <div class="d_tags">
+
+                    {% for kind in r_postkind %}
+                        <a title="" href="{% url 'post:file_category' kind.category %}" >{{ kind.category__cname }}
+                            ({{ kind.c }})</a>
+                    {% endfor %}
+
+                </div>
+            </div>
+  </div>
+
+     <!--归档-->
+  <div class="widget-wrap">
+    <h3 class="widget-title">文章归档</h3>
+    <div class="widget">
+      <ul class="archive-list">
+            {% for ft in r_filetime %}
+                <li class="archive-list-item RecPosts">
+                      <a class="archive-list-link" href="/sameMonth/{{ ft.0 | truncatechars:4 }}/{{ ft.0|splits }}">{{ ft.0 }}</a>
+                      <span class="archive-list-count">{{ ft.1 }}</span>
+                </li>
+            {% endfor %}
+      </ul>
+    </div>
+  </div>
+
+    <!--近期文章-->
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+            {% for recentpost in r_recentposts %}
+                <li class="RecPosts">
+                    <a href="{% url 'post:detail' recentpost.id %}" target="_blank">{{ recentpost.title }}</a>
+                </li>
+            {% endfor %}
+
+
+
+      </ul>
+    </div>
+  </div>
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+          <li>
+            <a href="http://www.bjsxt.com/" target="_blank"></a>
+          </li>
+          <li>
+            <a href="http://www.sxt.cn/" target="_blank"></a>
+          </li>
+      </ul>
+    </div>
+  </div>
+</aside>

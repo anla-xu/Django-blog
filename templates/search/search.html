@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block left %}
+    <div id="main">
+        {% if query %}
+{#            判读是否有搜索结果#}
+            {% for post in page.object_list %}
+            <article class="article article-type-post">
+
+            <div class="article-inner">
+                <header class="article-header">
+                    <h1 itemprop="name">
+                        <a class="article-title" href="{% url 'post:detail' post.object.id %}" target="_blank">{{ post.object.title }}</a>
+                    </h1>
+                </header>
+                <div class="focus">
+                        <a target="_blank" href="#">
+                            <img class="thumb" width="200" height="123" src="{{ MEDIA_URL }}{{ post.object.photo }}" alt="别再纠结使用那个Python环境管理器了">
+                        </a>
+                </div>
+                <div class="article-entry" itemprop="articleBody">
+                    <span class="note">{{ post.object.about }}</span>
+                    <hr>
+                    <div class="article-meta">
+                            <span class="article-date">
+                                <time>{{ post.object.createtime|date:'Y-m-d ' }}</time>
+                            </span>
+                            <div class="article-category">
+                                <a class="article-category-link" href="#" target="_blank">{{ post.object.category.cname }}</a>
+                            </div>
+                    </div>
+
+                    <p class="article-more-link">
+                        <a href="{% url 'post:detail' post.object.id %}" target="_blank">阅读全文</a>
+
+                    </p>
+
+                </div>
+
+                <footer class="article-footer">
+                    <a data-url="存放文章的url" class="article-share-link">分享</a>
+                    <ul class="article-tag-list">
+
+                        {% for t in post.object.tag.all %}
+                            <li class="article-tag-list-item">
+                                <a class="article-tag-list-link" href="#">{{ t.tname }}</a>
+                            </li>
+                        {% endfor %}
+
+                        <li>
+                            <i class="fa fa-eye"></i>
+                        </li>
+
+
+
+
+
+                    </ul>
+                </footer>
+            </div>
+        </article>
+        {% endfor %}
+        {% endif %}
+        <nav id="page-nav">
+
+                {% if postList.has_previous %}
+                    <a class="extend prev" rel="next" href="{% url 'post:pos' postList.previous_page_number %}">« Prev</a>
+                {% endif %}
+
+
+
+                {% for page in pageList %}
+                    {% if currentNum == page %}
+                        <span class="page-number current">{{ page }}</span>
+
+                    {% else %}
+                        <a class="page-number" href="{% url 'post:pos' page %}">{{ page }}</a>
+                    {% endif %}
+
+
+                {% endfor %}
+
+
+
+
+
+
+
+
+            {% if postList.has_next %}
+                <a class="extend next" rel="next" href="{% url 'post:pos' postList.next_page_number %}">Next »</a>
+            {% endif %}
+
+
+        </nav>
+
+    </div>
+{% endblock %}
