@@ -140,7 +140,9 @@ def like(request):
             if status == 'like':
                 if obj.good:
                     response['status'] = False
-                    print("用户已点赞")
+                    obj.good = False
+                    obj.save()
+                    print("用户取消点赞")
                 else:
                     obj.good = True
                     obj.save()
@@ -148,7 +150,9 @@ def like(request):
             else:
                 if obj.collection:
                     response['status'] = False
-                    print("用户已收藏")
+                    obj.collection = False
+                    obj.save()
+                    print("用户取消收藏")
                 else:
                     obj.collection = True
                     obj.save()

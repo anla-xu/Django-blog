@@ -1,4 +1,3 @@
-
 import hashlib
 import random
 
@@ -9,15 +8,16 @@ from django.http import HttpResponse
 from .forms import UserLoginForm
 from . import models
 
+
 # Create your views here.
 
 def logins(request):
-    return render(request,'login.html')
+    return render(request, 'login.html')
 
 
 def user_login(request):
     if request.method == 'POST':
-        context = {'status':''}
+        context = {'status': ''}
         username = request.POST.get('username')
         user = models.User.objects.filter(username=username).first()
         if user:
@@ -31,7 +31,7 @@ def user_login(request):
             else:
                 return render(request, 'login.html', context=context)
         else:
-            return render(request,'login.html', context=context)
+            return render(request, 'login.html', context=context)
 
     elif request.method == 'GET':
         return render(request, 'login.html')
@@ -40,6 +40,7 @@ def user_login(request):
 def user_logout(request):
     request.session.flush()
     return redirect("post:home")
+
 
 def hash_paw(pwd):
     md = hashlib.md5()
@@ -66,7 +67,7 @@ def user_register(request):
         hash_password = hash_paw(password)
         # 写数据库
         try:
-            user = models.User(username=username, password=hash_password,e_mail=email)
+            user = models.User(username=username, password=hash_password, e_mail=email)
             user.save()
             print('保存成功')
             return render(request, 'login.html', {'status': True})
@@ -75,7 +76,8 @@ def user_register(request):
             return redirect('useroperation:register')
     return None
 
-#随机生成验证码
+
+# 随机生成验证码
 def random_str(randomlength=6):
     str = ''
     chars = 'abcdefghijklmnopqrstuvwsyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -84,22 +86,24 @@ def random_str(randomlength=6):
         str += chars[random.randint(0, length)]
     return str
 
-#发送邮件找回密码
-def findpwd(request):
-    return render(request,'findpwd.html',{'status':False})
 
-# 点击获取二维码，得到名字
+# 发送邮件找回密码
+def findpwd(request):
+    return render(request, 'findpwd.html', {'status': False})
+
+
+# 点击获取验证码，得到名字
 def send_email(request):
     print("*******************")
-    if request.method=="POST":
-        username = request.POST.get('username','')
-        password = request.POST.get('password','')
-        print(username,password)
+    if request.method == "POST":
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        print(username, password)
         if password:
             try:
                 new_pwd = request.POST.get("password")
                 auth_code = request.POST.get("auth_code")
-                print(username,new_pwd,auth_code)
+                print(username, new_pwd, auth_code)
                 if username == request.session["user_name"]:
                     print("name相同")
                     if auth_code == request.session["auth_code"]:
@@ -126,9 +130,8 @@ def send_email(request):
                 email_body = "验证码为：" + code
                 print("////////")
                 # render(request, 'findpwd.html', {'status': True})
-                send_status = send_mail(subject=email_title, message=email_body, from_email="1131649620@qq.com", recipient_list=[user.e_mail, ])
+                send_status = send_mail(subject=email_title, message=email_body, from_email="1131649620@qq.com",
+                                        recipient_list=[user.e_mail, ])
                 return render(request, 'findpwd.html', {'status': True})
             except:
                 return HttpResponse("用户不存在")
-
-

@@ -202,6 +202,9 @@
                         var val = parseInt($("#like_count").text());
                         $('#like_count').text(val+1);
 
+                    }else {
+                        var val = parseInt($("#like_count").text());
+                        $('#like_count').text(val-1);
                     }
                     count_like++;
                 }
@@ -213,6 +216,10 @@
                 {#window.location.replace("{% url 'useroperation:login' %}");#}
                 return ;
             {% endif %}
+            if (count_save >10){
+                alert("操作次数过多！请稍后再试");
+                return ;
+            }
             if (collect_up){
                 $(".save .up").attr("src","/media/images/tobarCollectionActive.png");
                 $('.save').toggleClass('cs');
@@ -238,13 +245,16 @@
                         // Ajax 局部刷新!!!
                         var val = parseInt($("#collect_count").text());
                         $('#collect_count').text(val+1);
+                    }else {
+                        var val = parseInt($("#collect_count").text());
+                        $('#collect_count').text(val-1);
                     }
                     count_save++;
                 }
             })
         })
         $('#publish').click(function () {
-            {# ajax来操作点赞功能 #}
+            {# ajax来操作评论 #}
             $.ajax({
                 url: '/post-comment/',
                 type: 'post',
