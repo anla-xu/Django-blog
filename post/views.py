@@ -7,10 +7,13 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 # Create your views here.
 # 渲染主页面
+from django.views.decorators.csrf import csrf_exempt
+
 from post.forms import CommentForm
 from post.models import Post, Comment, Like
 from django.core.paginator import Paginator
 import math
+import re
 
 from useroperation.models import User
 
@@ -59,7 +62,7 @@ def detail(request, postid):
     likes = Like.objects.filter(post_id=postid, good=True)
     # print("likes:",likes.count())
     # 取出文章评论
-    comments = Comment.objects.filter(post=postid)
+    comments = Comment.objects.filter(post=postid).order_by('-created')
 
     # 获取收藏数
     collections = Like.objects.filter(post_id=postid, collection=True)
@@ -91,27 +94,35 @@ def same_month(request, year, month):
     samemonthpost = Post.objects.filter(createtime__year=year, createtime__month=month)
     return render(request, 'samecagefile.html', {'same_fileall': samemonthpost})
 
-
-def post_comment(request, post_id):
-    print(post_id)
+@csrf_exempt
+def post_comment(request):
+    print("进入评论")
+    post_id = request.POST.get('post_id')
+    conent = request.POST.get('body')
+    # print(post_id)
     article = get_object_or_404(Post, id=post_id)
     print(article)
     # 处理 POST 请求
-    response = {'st':1}
+    response = {'st':''}
     if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit=False)
-            print(new_comment)
-            new_comment.post = article
-            new_comment.u_name = User.objects.get(id=request.session['id'])
-            new_comment.save()
+        comment = CommentForm(request.POST)
+        if comment.is_valid():
+            new_com = comment.save(commit=False)
+            new_com.post = article
+            new_com.u_name = User.objects.get(id=request.session['id'])
+            new_com.save()
             try:
-                obj = Like.objects.get(u_name_id=request.session['id'])
-                obj.collection = True
+                print(request.session['id'],post_id)
+                obj = Like.objects.get(u_name_id=request.session['id'],post_id=post_id)
+                obj.comment = True
                 obj.save()
-            except:
+            except Exception as e:
+                print(e)
+                print("生成新的用户操作")
                 Like.objects.create(u_name_id=request.session['id'],post_id=post_id,collection=True)
+            t = Comment.objects.filter(body=conent).first().created
+            t = str(t)
+            response['st'] = "<hr style='background-color: #f2dede;border: 0 none;color: #eee;height: 1px;'><div style='margin:10px 0 10px 0'><strong style='color: pink'>"+request.session['username']+"</strong> 于 <span style='color: green'>"+t[:t.find('.')]+"</span> 时说：<p style='font-family: inherit; font-size: 1em;'>"+conent+"</p></div>"
             return JsonResponse(response)
         else:
             return HttpResponse("表单内容有误，请重新填写。")

@@ -39,7 +39,7 @@
                             <time>{{ post.createtime|date:'Y-m-d H:i:s' }}</time>
                         </span>
                         <div class="article-category">
-                            <a class="article-category-link" href="#" target="_blank">{{ post.category.cname }}</a>
+                            <a class="article-category-link" href="{% url 'post:file_category' post.category.id %}" target="_blank">{{ post.category.cname }}</a>
                         </div>
                     </div>
                     <div class="bdsharebuttonbox" style="margin:50px 6px 6px 0">
@@ -95,13 +95,13 @@
                                     <textarea
                                         type="text"
                                         class="form-control"
-                                        id="body"
+                                        id="pl-body"
                                         name="body"
                                         rows="2"
                                         placeholder="写下你的评论..."></textarea>
                                 </div>
                                 <!-- 提交按钮 -->
-                                <button type="button" class="btn btn-primary " id="publish">发布</button>
+                                <button type="button" class="btn btn-publish ">发布</button>
                             </form>
                         </div>
                         <br>
@@ -112,9 +112,12 @@
                         </h5>
                         <br>
                     {% endif %}
-
-                    <h4>共有{{ comments.count }}条评论</h4>
+                    <h4>共有
+                            <span id="mach">{{ comments.count }}</span>
+                            条评论
+                    </h4>
                     <div id="allcomment">
+                            <span id="biao"></span>
                         {% for comment in comments %}
                             <hr style="background-color: #f2dede;
         border: 0 none;
@@ -253,32 +256,27 @@
                 }
             })
         })
-        $('#publish').click(function () {
-            {# ajax来操作评论 #}
-            $.ajax({
-                url: '/post-comment/',
-                type: 'post',
-                data: {
-                    'csrfmiddlewaretoken': $("[name='csrfmiddlewaretoken']").val(),  //token值
-                    'content': $('.comments').serialize(),
-                    'article_id': '{{ post.id }}',
-                },
-                success: function (data) {
-                    console.log("评论成功")
-                    if (data.status) {
-                        console.log(data.status)
-                        // Ajax 局部刷新!!!
-                        var val = parseInt($("#allcomment").text());
-                        $('#allcomment').html();
-                    }
-                    else {
-                        setTimeout(function () {  // 设置时钟函数，一秒钟后消失
-                            $('#digg_tips').html('');  //清空
-                        }, 1000)
-                    }
+        $('.btn-publish').click(function () {
+                var content = $('.form-control').val();
+                if (content == ''){
+                    console.log("comment is None");
+                    $('#pl-body').attr('placeholder','请填写评论!');
+                    return
                 }
-            })
-        })
+                $.ajax({
+                    url: '/post-comment/',
+                    type: 'POST',
+                    data: {body: content, post_id:{{post.id}}},
+                    success: function (data) {
+                        var val = parseInt($("#mach").text());
+                        var con = parseInt($(".form-control").text());
+                        $('#mach').text(val + 1);
+                        $('.form-control').val('');
+                        $('#biao').after(data.st);
+
+                    }
+                });
+            });
         function resettime(){
             count_like = 0;
             count_save = 0;
