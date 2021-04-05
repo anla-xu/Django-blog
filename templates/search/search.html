@@ -15,7 +15,7 @@
                 </header>
                 <div class="focus">
                         <a target="_blank" href="#">
-                            <img class="thumb" width="200" height="123" src="{{ MEDIA_URL }}{{ post.object.photo }}" alt="别再纠结使用那个Python环境管理器了">
+                            <img class="thumb" width="200" height="123" src="{{ MEDIA_URL }}{{ post.object.photo }}" alt="图片缺失">
                         </a>
                 </div>
                 <div class="article-entry" itemprop="articleBody">
@@ -26,7 +26,7 @@
                                 <time>{{ post.object.createtime|date:'Y-m-d ' }}</time>
                             </span>
                             <div class="article-category">
-                                <a class="article-category-link" href="#" target="_blank">{{ post.object.category.cname }}</a>
+                                <a class="article-category-link" href="{% url 'post:file_category' post.object.category.id %}" target="_blank">{{ post.object.category.cname }}</a>
                             </div>
                     </div>
 

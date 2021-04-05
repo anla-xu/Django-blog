@@ -14,7 +14,7 @@
                 </header>
                 <div class="focus">
                         <a target="_blank" href="#">
-                            <img class="thumb" width="200" height="123" src="{{ MEDIA_URL }}{{ post.photo }}" alt="别再纠结使用那个Python环境管理器了">
+                            <img class="thumb" width="200" height="123" src="{{ MEDIA_URL }}{{ post.photo }}" alt="图片缺失">
                         </a>
                 </div>
                 <div class="article-entry" itemprop="articleBody">
@@ -74,13 +74,6 @@
 
 
                 {% endfor %}
-
-
-
-
-
-
-
 
             {% if postList.has_next %}
                 <a class="extend next" rel="next" href="{% url 'post:pos' postList.next_page_number %}">Next »</a>
