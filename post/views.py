@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from django.views.decorators.cache import cache_page
 from django.db.models import QuerySet
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
-
+from django.core.mail import send_mail
 # Create your views here.
 # 渲染主页面
 from django.views.decorators.csrf import csrf_exempt
@@ -14,7 +14,7 @@ from post.models import Post, Comment, Like
 from django.core.paginator import Paginator
 import math
 import re
-
+import threading
 from useroperation.models import User
 
 
@@ -56,6 +56,7 @@ def fenye(postList, num):
 
 
 # 展示文章
+@cache_page(60 * 15)
 def detail(request, postid):
     post = Post.objects.get(id=postid)
     # 取出点赞数
@@ -111,6 +112,8 @@ def post_comment(request):
             new_com.post = article
             new_com.u_name = User.objects.get(id=request.session['id'])
             new_com.save()
+            p = threading.Thread(target=tip,args=(article,post_id))
+            p.start()
             try:
                 print(request.session['id'],post_id)
                 obj = Like.objects.get(u_name_id=request.session['id'],post_id=post_id)
@@ -130,7 +133,13 @@ def post_comment(request):
     else:
         return HttpResponse("发表评论仅接受POST请求。")
 
-
+def tip(article,post_id):
+    email_title = "你的博客文章'{}'有新的评论，快去看看吧！".format(article.title)
+    email_body = "http://127.0.0.1:8000/post/" + str(post_id)
+    print(email_title)
+    print(email_body)
+    send_mail(subject=email_title, message=email_body, from_email="weiquan_xu@foxmail.com",
+              recipient_list=["1131649620@qq.com", ])
 # 联系作者
 def contact(request):
     return render(request, 'contact.html')
@@ -177,7 +186,7 @@ def like(request):
 
         return JsonResponse(response)
     except:
-        return redirect('useroperation::logining')
+        return redirect('useroperation:logining')
 
 
 # 用户点赞的文章

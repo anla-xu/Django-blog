@@ -64,7 +64,7 @@ function Sendpwd() {
 	}
     if ($.trim(txtPwd1) == "") {
 
-        Tip('请输入密码！');
+        Tip('请再次输入密码！');
         $("#txtPwd1").focus();
         return;
 
@@ -129,7 +129,7 @@ function Findpwd2() {
 	}
     if ($.trim(txtPwd1) == "") {
 
-        Tip('请输入密码！');
+        Tip('请再次输入密码！');
         $("#txtPwd1").focus();
         return;
 
@@ -140,7 +140,12 @@ function Findpwd2() {
         $("#txtPwd1").focus();
         return;
     }
+	if ($.trim(txtcode) == "") {
 
+        Tip('请输入验证码！');
+        $("#txtPwd1").focus();
+        return;
+    }
 	$('#form_login').submit();
 	return false;
 

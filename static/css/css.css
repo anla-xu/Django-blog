@@ -68,7 +68,7 @@ ol, ul {
 }
 .logobg_style .input-group-addon{ padding:6px 20px }
 .logobg_style .login-content .title_name{ color: #ffffff; font-weight: bold}
-.login_padding{padding: 15px 40px; position: relative}
+.login_padding{margin: 15px 40px; position: relative}
 .logobg_style .form-control{ height: 45px}
 .logobg_style .input-group {
      height:45px;

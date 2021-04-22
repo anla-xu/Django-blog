@@ -4,7 +4,7 @@ import random
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .forms import UserLoginForm
 from . import models
 
@@ -89,7 +89,7 @@ def random_str(randomlength=6):
 
 # 发送邮件找回密码
 def findpwd(request):
-    return render(request, 'findpwd.html', {'status': False})
+    return render(request, 'findpwd.html', {'status': False,'error': ''})
 
 
 # 点击获取验证码，得到名字
@@ -118,7 +118,7 @@ def send_email(request):
                 else:
                     return render(request, 'findpwd.html', {'error': '用户名错误'})
             except:
-                pass
+                return render(request, 'findpwd.html', {'error': '验证码过期，请重新获取'})
 
         else:
             try:
@@ -127,11 +127,13 @@ def send_email(request):
                 email_title = "找回密码"
                 code = random_str()  # 随机生成的验证码
                 request.session["auth_code"] = code  # 将验证码保存到session
-                email_body = "验证码为：" + code
+                request.session.set_expiry(300)
+                email_body = "验证码为：" + code+"\n有效时间为5分钟。"
                 print("////////")
                 # render(request, 'findpwd.html', {'status': True})
-                send_status = send_mail(subject=email_title, message=email_body, from_email="1131649620@qq.com",
+                send_status = send_mail(subject=email_title, message=email_body, from_email="weiquan_xu@foxmail.com",
                                         recipient_list=[user.e_mail, ])
-                return render(request, 'findpwd.html', {'status': True})
-            except:
-                return HttpResponse("用户不存在")
+                return render(request, 'findpwd.html', {'status': True,'no_user': False,'error': ''})
+            except Exception as e:
+                print(e)
+                return render(request, 'findpwd.html', {'status': False,'no_user': True,'error': ''})

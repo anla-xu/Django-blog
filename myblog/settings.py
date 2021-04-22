@@ -196,7 +196,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = '1131649620@qq.com' # 帐号
+EMAIL_HOST_USER = 'weiquan_xu@foxmail.com' # 帐号
 EMAIL_HOST_PASSWORD = 'tvefsmpsoqlibafh' # 密码
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

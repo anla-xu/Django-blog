@@ -32,7 +32,7 @@
 								<i class="icon_user"></i>
 							</div>
 
-							<input type="text" class="form-control" name="username" id="username" placeholder="用户名" autocomplete="off">
+							<input type="text" class="form-control" name="username" id="username" placeholder="用户名" autocomplete="off" value="{{ request.session.use_rname }}">
 						</div>
 
 					</div>
@@ -68,32 +68,14 @@
 								<i class="icon_password"></i>
 							</div>
 
-							<input type="text" class="form-control auth_code" name="auth_code" id="auth_code" placeholder="验证码" autocomplete="off">
+							<input type="text" class="form-control auth_code" name="auth_code" id="auth_code" placeholder="验证码，区分大小写" autocomplete="off">
 						</div>
 
 					</div>
                         {% if status %}
 						    <div class=" textright">
-                                <a href="javascript:;" type="submit" class="forget" id="forget" style="font-size: 16px" onClick="Findpwd1()">获取验证码</a></div>
-                            <script>
-                                var countdown=30;
-                                var get = document.getElementById('forget');
-                                settime();
-                                function settime(){
-                                    if (countdown == 0) {
-                                        get.style = "";
-                                        get.innerHTML="获取验证码";
-                                        countdown = 10;
-                                        return;
-                                    } else {
-                                        get.style = "pointer-events: none;cursor: default;color:gray;";
-                                        get.innerHTML="重新发送"+ countdown;
-                                        countdown--;
-                                    }
-                                    setTimeout(function() {
-                                        settime() },1000)
-                                }
-                            </script>
+                                <a href="javascript:;" type="submit" class="forget" id="forget" style="font-size: 16px" onClick="Findpwd1();settime()">获取验证码</a></div>
+
                         {% else %}
                             <div class=" textright"><a href="javascript:;" type="submit" class="forget" id="forget" style="font-size: 16px" onClick="Findpwd1()">获取验证码</a></div>
                         {% endif %}
@@ -116,5 +98,32 @@
 <script src="/static/TweenLite/EasePack.min.js"></script>
 <script src="/static/TweenLite/rAF.js"></script>
 <script src="/static/TweenLite/demo-1.js"></script>
+<script>
+    var countdown=60;
+    {% if error != '' %}
+        $(".tishi").show().html("<div class='prompt'><i class='tishi_icon'></i>{{ error }}</div>");
+    {% endif %}
+    var get = document.getElementById('forget');
+    function settime(){
+        if (countdown == 0) {
+            get.style = "";
+            get.innerHTML="获取验证码";
+            countdown = 10;
+            return;
+        } else {
+            get.style = "pointer-events: none;cursor: default;color:gray;";
+            get.innerHTML="重新发送"+ countdown;
+            countdown--;
+        }
+        setTimeout(function() {
+            settime() },1000)
+    }
+    {% if no_user %}
+        $("#username").focus();
+        $(".tishi").show().html("<div class='prompt'><i class='tishi_icon'></i>"+"用户名不存在"+"</div>");
+        countdown=10;
+        settime();
+    {% endif %}
+</script>
 </body>
 </html>
