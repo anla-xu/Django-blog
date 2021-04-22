@@ -18,23 +18,23 @@
 
 </head>
 <body  class="logobg_style">
-{#<div id="large-header" class="large-header login-page">#}
-{#  		<canvas id="demo-canvas" width="1590" height="711"></canvas>#}
-<div id="main_con" style="width:1519px">
-{% csrf_token %}
-    <div id="wrap" style="width:1519px">
-        {% include 'header.html' %}
-        <div class="outer" style="width:1519px">
-            {% include "relation.html" %}
-            {% block left %}
-            {% endblock %}
-            {% include 'right.html' %}
+<div id="large-header" class="large-header login-page">
+  		<canvas id="demo-canvas" width="1519"></canvas>
+    <div id="main_con" style="width:1519px">
+    {% csrf_token %}
+        <div id="wrap" style="width:1519px">
+            {% include 'header.html' %}
+            <div class="outer" style="width:1519px">
+                {% include "relation.html" %}
+                {% block left %}
+                {% endblock %}
+                {% include 'right.html' %}
+            </div>
+            {% include 'footer.html' %}
+        <img id="gotoTop" src="/media/imgs/return.jpg" alt="">
         </div>
-        {% include 'footer.html' %}
-    <img id="gotoTop" src="/media/imgs/return.jpg" alt="">
     </div>
 </div>
-{#</div>#}
 
 
 <script src="/static/TweenLite/TweenLite.min.js"></script>

@@ -19,72 +19,9 @@
                         <a class="article-title" href="{% url 'post:detail' post.post.id %}" target="_blank">{{ post.post.title }}</a>
                     </h1>
                 </header>
-{#                <div class="focus">#}
-{#                        <a target="_blank" href="#">#}
-{#                            <img class="thumb" width="200" height="123" src="{{ MEDIA_URL }}{{ post.post.photo }}" alt="图片缺失">#}
-{#                        </a>#}
-{#                </div>#}
-{#                <div class="article-entry" itemprop="articleBody">#}
-{#                    <span class="note">{{ post.post.about }}</span>#}
-{#                    <hr>#}
-{#                    {{ post.post.desc }}#}
-{#                    <div class="article-meta">#}
-{#                            <span class="article-date">#}
-{#                                <time>{{ post.post.createtime|date:'Y-m-d ' }}</time>#}
-{#                            </span>#}
-{#                            <div class="article-category">#}
-{#                                <a class="article-category-link" href="#" target="_blank">{{ post.post.category.cname }}</a>#}
-{#                            </div>#}
-{#                    </div>#}
-{##}
-{#                    <p class="article-more-link">#}
-{#                        <a href="{% url 'post:detail' post.post.id %}" target="_blank">阅读全文</a>#}
-{##}
-{#                    </p>#}
-{##}
-{#                </div>#}
-{##}
-{#                <footer class="article-footer">#}
-{#                    <a data-url="存放文章的url" class="article-share-link">分享</a>#}
-{#                    <ul class="article-tag-list">#}
-{#                        {% for t in post.post.tag.all %}#}
-{#                            <li class="article-tag-list-item">#}
-{#                                <a class="article-tag-list-link" href="{% url 'post:file_category' t.id %}">{{ t.tname }}</a>#}
-{#                            </li>#}
-{#                        {% endfor %}#}
-{##}
-{#                        <li>#}
-{#                            <i class="fa fa-eye"></i>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </footer>#}
-            </div>
             </article>
         {% endfor %}
 
-{#        <nav id="page-nav">#}
-{##}
-{#                {% if postList.has_previous %}#}
-{#                    <a class="extend prev" rel="next" href="{% url 'post:pos' postList.previous_page_number %}">« Prev</a>#}
-{#                {% endif %}#}
-{##}
-{##}
-{##}
-{#                {% for page in pageList %}#}
-{#                    {% if currentNum == page %}#}
-{#                        <span class="page-number current">{{ page }}</span>#}
-{##}
-{#                    {% else %}#}
-{#                        <a class="page-number" href="{% url 'post:pos' page %}">{{ page }}</a>#}
-{#                    {% endif %}#}
-{##}
-{#                {% endfor %}#}
-{#            {% if postList.has_next %}#}
-{#                <a class="extend next" rel="next" href="{% url 'post:pos' postList.next_page_number %}">Next »</a>#}
-{#            {% endif %}#}
-{##}
-{##}
-{#        </nav>#}
 
     </div>
 {% endblock %}

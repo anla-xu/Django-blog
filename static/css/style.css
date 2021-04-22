@@ -273,7 +273,7 @@ body {
   -ms-transition: 0.2s ease-out;
   transition: 0.2s ease-out;
   z-index: 1;
-  background: #eee;
+  /*background: #eee;*/
 }
 .mobile-nav-on #wrap {
   left: 280px;
