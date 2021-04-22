@@ -1,6 +1,6 @@
 import hashlib
 import random
-
+import threading
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -129,11 +129,13 @@ def send_email(request):
                 request.session["auth_code"] = code  # 将验证码保存到session
                 request.session.set_expiry(300)
                 email_body = "验证码为：" + code+"\n有效时间为5分钟。"
-                print("////////")
-                # render(request, 'findpwd.html', {'status': True})
-                send_status = send_mail(subject=email_title, message=email_body, from_email="weiquan_xu@foxmail.com",
-                                        recipient_list=[user.e_mail, ])
+                p = threading.Thread(target=send,args=(email_title,email_body,user))
+                p.start()
                 return render(request, 'findpwd.html', {'status': True,'no_user': False,'error': ''})
             except Exception as e:
                 print(e)
                 return render(request, 'findpwd.html', {'status': False,'no_user': True,'error': ''})
+
+def send(email_title,email_body,user):
+    send_mail(subject=email_title, message=email_body, from_email="weiquan_xu@foxmail.com",
+              recipient_list=[user.e_mail, ])
