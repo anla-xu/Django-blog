@@ -13,6 +13,7 @@ class ChineseTokenizer(Tokenizer):
         seglist = jieba.cut(value, cut_all=False)  # (精确模式)使用结巴分词库进行分词
         # seglist = jieba.cut_for_search(value)  #(搜索引擎模式) 使用结巴分词库进行分词
         for w in seglist:
+            print(w)
             t.original = t.text = w
             t.boost = 1.0
             if positions:

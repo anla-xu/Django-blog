@@ -17,7 +17,7 @@ def logins(request):
 
 def user_login(request):
     if request.method == 'POST':
-        context = {'status': ''}
+        context = {'log_status': ''}
         username = request.POST.get('username')
         user = models.User.objects.filter(username=username).first()
         if user:
@@ -29,8 +29,10 @@ def user_login(request):
                 request.session['id'] = user.id
                 return redirect("post:home")
             else:
+                context['log_status'] = "密码错误"
                 return render(request, 'login.html', context=context)
         else:
+            context['log_status'] = "用户名错误"
             return render(request, 'login.html', context=context)
 
     elif request.method == 'GET':

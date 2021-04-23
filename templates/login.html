@@ -17,6 +17,7 @@
 <title>登录</title>
 </head>
 <script type="text/javascript">
+
     {% if status %}
         alert("注册成功!");
         window.setTimeout("window.location='.'",1000);
@@ -82,5 +83,11 @@
 <script src="/static/TweenLite/EasePack.min.js"></script>
 <script src="/static/TweenLite/rAF.js"></script>
 <script src="/static/TweenLite/demo-1.js"></script>
+<script>
+console.log("{{ log_status }}")
+    {% if log_status %}
+        $(".tishi").show().html("<div class='prompt'><i class='tishi_icon'></i>{{ log_status }}</div>");
+    {% endif %}
+</script>
 </body>
 </html>

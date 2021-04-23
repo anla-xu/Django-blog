@@ -36,7 +36,7 @@ class Post(models.Model):
     title = models.CharField(max_length=50,unique=True)
     photo = models.ImageField(upload_to='imgs')
     about = models.CharField(max_length=100)
-    content = RichTextUploadingField(null=True,blank=True,config_name='my_config')
+    content = RichTextUploadingField(null=True,blank=True,config_name='my_config')#blank=True，表单不为空
     createtime = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag)

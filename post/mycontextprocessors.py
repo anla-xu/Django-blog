@@ -11,7 +11,7 @@ def m_right_cate(request):
     # file_time = Post.objects.dates('createtime','month',order='DESC')
     from django.db import connection
 
-    cursor = connection.cursor()
+    cursor = connection.cursor()# DATE_FORMAT日期转字符串
     cursor.execute("SELECT createtime,COUNT(*) FROM (SELECT DATE_FORMAT(createtime,'%Y-%m') createtime FROM blog_post) c GROUP BY createtime ORDER BY createtime")
     file_time = cursor.fetchall()  # 得到一个元组(('2020-04',3),('2020-05',5))
 

@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'comment',
     'ckeditor',
     'ckeditor_uploader',
-    'haystack'
+    'haystack'#全文检索
 ]
 
 MIDDLEWARE = [
@@ -143,6 +143,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'static','js')
 ]
 
+# 文章中的静态文件
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # 使用默认的主题名称
@@ -150,7 +151,7 @@ CKEDITOR_UPLOAD_PATH = 'upload/'
 
 # settings.py
 
-# ckeditor 插入代码段配置
+# 配置富文本编辑器
 CKEDITOR_CONFIGS = {
     # 将这份配置命名为 my_config
     'my_config': {
@@ -197,6 +198,6 @@ EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'weiquan_xu@foxmail.com' # 帐号
-EMAIL_HOST_PASSWORD = 'tvefsmpsoqlibafh' # 密码
+EMAIL_HOST_PASSWORD = 'tvefsmpsoqlibafh' # 授权码
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
